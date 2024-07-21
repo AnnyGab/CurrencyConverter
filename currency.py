@@ -1,5 +1,3 @@
-"""CURRENCY CONVERTER"""
-
 import requests
 
 API_KEY = 'fca_live_kRXbhrYCVoGaafro0SDik1iwu7hlHt68YhH3mSyb'
@@ -14,8 +12,19 @@ def convert_currency(base):
         response = requests.get(url)
         data = response.json()
         return data["data"]
-    except Exception as e:
-        print(e)
+    except:
+        print("Invalid currency")
         return None
-data = convert_currency("CAD")
-print(data)
+
+while True: 
+    base = input("Enter the base currency (q for quit): ").upper()
+
+    if base == "Q":
+        break
+    data = convert_currency(base)
+    if not data:
+        continue
+
+    del data[base]
+    for ticker, value in data.items():
+        print(f"{ticker}:{value}")
